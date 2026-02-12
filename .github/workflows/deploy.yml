@@ -2,7 +2,8 @@
 name: Deploy to S3
 
 on:
-  push:
+  push:               # Temporary comment to trigger workflow
+
     branches:
       - main   # Trigger workflow on pushes to the main branch
 
