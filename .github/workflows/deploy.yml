@@ -1,11 +1,10 @@
-# GitHub Actions Workflow: Deploy to S3
+# File: .github/workflows/deploy.yml
 name: Deploy to S3
 
-# Trigger workflow on push to main branch
 on:
   push:
     branches:
-      - main
+      - main   # Trigger workflow on pushes to the main branch
 
 jobs:
   deploy:
@@ -16,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Configure AWS credentials
+      # 2. Configure AWS CLI with secrets
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -24,7 +23,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # 3. Sync files to S3
-      - name: Deploy to S3
+      # 3. Sync all files to your S3 bucket
+      - name: Sync files to S3
         run: |
           aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }}/ --acl public-read --delete
